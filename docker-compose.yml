@@ -1,0 +1,96 @@
+version: '3.7'
+services:
+  nginx:
+    container_name: ${NGINX_CONTAINER}
+    image: nginx:${NGINX_VERSION}
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./:/server/http
+    ports:
+      - 9084:80
+      - 9043:443
+    networks:
+      - php-trans-ip-coding-backend
+    links:
+      - php
+      - mysql
+      - rabbitmq
+
+  php:
+    container_name: ${PHP_CONTAINER}
+    build:
+      context: .
+      dockerfile: docker/php-fpm/Dockerfile
+    restart: unless-stopped
+    environment:
+      - NEW_RELIC_KEY=${NEW_RELIC_KEY}
+      - NEW_RELIC_NAME=${NEW_RELIC_NAME}
+    volumes:
+      - ./:/server/http
+      - ./var/cache/xdebug:/tmp
+      - /home/ateeb/.ssh/:/root/.ssh
+    ports:
+      - 9000:9000
+    networks:
+      - php-trans-ip-coding-backend
+    links:
+      - rabbitmq
+
+  mysql:
+    container_name: ${DB_CONTAINER}
+    image: mysql:${DB_VERSION}
+    restart: unless-stopped
+    hostname: ${DB_HOST}
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_USER=${DB_ROOT_USER}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - db-mysql-volume:/var/lib/mysql
+    ports:
+      - 9010:3306
+    networks:
+      php-trans-ip-coding-backend:
+        aliases:
+          - mysql
+    expose:
+      - '3306'
+
+
+
+  rabbitmq:
+    container_name: ${AMQP_CONTAINER}
+    image: "rabbitmq:3-management"
+    restart: unless-stopped
+    hostname: ${AMQP_HOST}
+    environment:
+      RABBITMQ_ERLANG_COOKIE: ${ERLANG_COOKIE}
+      RABBITMQ_DEFAULT_USER: ${AMQP_USER}
+      RABBITMQ_DEFAULT_PASS: ${AMQP_PASS}
+      RABBITMQ_DEFAULT_VHOST: ${AMQP_VHOST}
+    volumes:
+      - ./docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./docker/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+    ports:
+      - "9072:15672"
+      - "9073:5672"
+    networks:
+      - php-trans-ip-coding-backend
+    tty: true
+    command:  bash -c "rabbitmq-plugins enable rabbitmq_management; rabbitmq-server;"
+    expose:
+      - '5672'
+      - '15672'
+
+
+
+networks:
+  php-trans-ip-coding-backend:
+    name: php-trans-ip-coding-backend
+    driver: bridge
+
+volumes:
+  db-mysql-volume:
+
