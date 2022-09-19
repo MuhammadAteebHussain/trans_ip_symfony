@@ -22,489 +22,69 @@
     ],
     "parameters": [],
     "policies": [],
-    "exchanges": [
-        {
-            "name": "affiliates",
-            "vhost": "/",
-            "type": "fanout",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
-        {
-            "name": "affiliates.dlx",
-            "vhost": "/",
-            "type": "direct",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
-        {
-            "name": "affiliates.error",
-            "vhost": "/",
-            "type": "direct",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
-        {
-            "name": "affiliates_bi",
-            "vhost": "/",
-            "type": "fanout",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
-        {
-            "name": "affiliates.recurly.errors",
-            "vhost": "/",
-            "type": "direct",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
-        {
-            "name": "affiliates.recurly.dlx",
-            "vhost": "/",
-            "type": "direct",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
-        {
-            "name": "affiliates.recurly.order.checkout",
-            "vhost": "/",
-            "type": "fanout",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
-        {
-            "name": "affiliates.recurly.successful.notification.payment",
-            "vhost": "/",
-            "type": "fanout",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
-        {
-            "name": "affiliates.recurly.paid.notification.payment",
-            "vhost": "/",
-            "type": "fanout",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
-        {
-            "name": "affiliates.recurly.successful.refund.payment",
-            "vhost": "/",
-            "type": "fanout",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
-        {
-            "name": "affiliates.signup.pap",
-            "vhost": "/",
-            "type": "fanout",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        }
-    ],
+    "exchanges": [],
     "queues": [
         {
-            "name": "affiliates",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.dlx",
-                "x-dead-letter-routing-key" : "affiliates.dlx"
-            }
-        },
-        {
-            "name": "affiliates.dlx",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates",
-                "x-dead-letter-routing-key" : "affiliates",
-                "x-message-ttl" : 5000
-            }
-        },
-        {
-            "name": "affiliates.error",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates",
-                "x-dead-letter-routing-key" : "affiliates",
-                "x-message-ttl" : 120000
-            }
-        },
-        {
-            "name": "affiliates_bi",
+            "name": "create_file_queue",
             "vhost": "/",
             "durable": true,
             "auto_delete": false,
             "arguments": {}
         },
         {
-            "name": "affiliates.recurly.errors",
+            "name": "trans_ip_failed",
             "vhost": "/",
             "durable": true,
             "auto_delete": false,
             "arguments": {}
         },
         {
-            "name": "affiliates.recurly.dlx",
+            "name": "generate_hash_queue",
             "vhost": "/",
             "durable": true,
             "auto_delete": false,
             "arguments": {}
         },
         {
-            "name": "affiliates.recurly.order.checkout",
+            "name": "test_queue",
             "vhost": "/",
             "durable": true,
             "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.dlx",
-                "x-dead-letter-routing-key" : "affiliates.recurly.order.checkout.dlx"
-            }
-        },
-        {
-            "name": "affiliates.recurly.order.checkout.dlx",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.order.checkout",
-                "x-dead-letter-routing-key" : "affiliates.recurly.order.checkout",
-                "x-message-ttl" : 5000
-            }
-        },
-        {
-            "name": "affiliates.recurly.order.checkout.error",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.order.checkout",
-                "x-dead-letter-routing-key" : "affiliates.recurly.order.checkout",
-                "x-message-ttl" : 120000
-            }
-        },
-        {
-            "name": "affiliates.recurly.successful.notification.payment",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.dlx",
-                "x-dead-letter-routing-key" : "affiliates.recurly.successful.notification.payment.dlx"
-            }
-        },
-        {
-            "name": "affiliates.recurly.successful.notification.payment.dlx",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.successful.notification.payment",
-                "x-dead-letter-routing-key" : "affiliates.recurly.successful.notification.payment",
-                "x-message-ttl" : 5000
-            }
-        },
-        {
-            "name": "affiliates.recurly.successful.notification.payment.error",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.successful.notification.payment",
-                "x-dead-letter-routing-key" : "affiliates.recurly.successful.notification.payment",
-                "x-message-ttl" : 120000
-            }
-        },
-        {
-            "name": "affiliates.recurly.paid.notification.payment",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.dlx",
-                "x-dead-letter-routing-key" : "affiliates.recurly.paid.notification.payment.dlx"
-            }
-        },
-        {
-            "name": "affiliates.recurly.paid.notification.payment.dlx",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.paid.notification.payment",
-                "x-dead-letter-routing-key" : "affiliates.recurly.paid.notification.payment",
-                "x-message-ttl" : 5000
-            }
-        },
-        {
-            "name": "affiliates.recurly.paid.notification.payment.error",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.paid.notification.payment",
-                "x-dead-letter-routing-key" : "affiliates.recurly.paid.notification.payment",
-                "x-message-ttl" : 120000
-            }
-        },
-        {
-            "name": "affiliates.recurly.successful.refund.payment",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.dlx",
-                "x-dead-letter-routing-key" : "affiliates.recurly.successful.refund.payment.dlx"
-            }
-        },
-        {
-            "name": "affiliates.recurly.successful.refund.payment.dlx",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.successful.refund.payment",
-                "x-dead-letter-routing-key" : "affiliates.recurly.successful.refund.payment",
-                "x-message-ttl" : 5000
-            }
-        },
-        {
-            "name": "affiliates.recurly.successful.refund.payment.error",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.successful.refund.payment.payment",
-                "x-dead-letter-routing-key" : "affiliates.recurly.successful.refund.payment.payment",
-                "x-message-ttl" : 120000
-            }
-        },
-        {
-            "name": "affiliates.signup.pap",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.recurly.dlx",
-                "x-dead-letter-routing-key" : "affiliates.signup.pap.dlx"
-            }
-        },
-        {
-            "name": "affiliates.signup.pap.dlx",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.signup.pap",
-                "x-dead-letter-routing-key" : "affiliates.signup.pap",
-                "x-message-ttl" : 5000
-            }
-        },
-        {
-            "name": "affiliates.signup.pap.error",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange" : "affiliates.signup.pap",
-                "x-dead-letter-routing-key" : "affiliates.signup.pap",
-                "x-message-ttl" : 120000
-            }
+            "arguments": {}
         }
+        
     ],
     "bindings": [
         {
-            "source": "affiliates",
+            "source": "create_file_queue",
             "vhost": "/",
-            "destination": "affiliates",
+            "destination": "create_file_queue",
             "destination_type": "queue",
             "routing_key": "*",
             "arguments": {}
         },
         {
-            "source": "affiliates.dlx",
+            "source": "trans_ip_failed",
             "vhost": "/",
-            "destination": "affiliates.dlx",
+            "destination": "trans_ip_failed",
             "destination_type": "queue",
-            "routing_key": "affiliates.dlx",
+            "routing_key": "trans_ip_failed",
             "arguments": {}
         },
         {
-            "source": "affiliates.error",
+            "source": "generate_hash_queue",
             "vhost": "/",
-            "destination": "affiliates.error",
-            "destination_type": "queue",
-            "routing_key": "affiliates.error",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates_bi",
-            "vhost": "/",
-            "destination": "affiliates_bi",
+            "destination": "generate_hash_queue",
             "destination_type": "queue",
             "routing_key": "*",
             "arguments": {}
         },
         {
-            "source": "affiliates.recurly.errors",
+            "source": "test_queue",
             "vhost": "/",
-            "destination": "affiliates.recurly.errors",
+            "destination": "test_queue",
             "destination_type": "queue",
             "routing_key": "*",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.dlx",
-            "vhost": "/",
-            "destination": "affiliates.recurly.dlx",
-            "destination_type": "queue",
-            "routing_key": "*",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.order.checkout",
-            "vhost": "/",
-            "destination": "affiliates.recurly.order.checkout",
-            "destination_type": "queue",
-            "routing_key": "*",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.dlx",
-            "vhost": "/",
-            "destination": "affiliates.recurly.order.checkout.dlx",
-            "destination_type": "queue",
-            "routing_key": "affiliates.recurly.order.checkout.dlx",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.errors",
-            "vhost": "/",
-            "destination": "affiliates.recurly.order.checkout.error",
-            "destination_type": "queue",
-            "routing_key": "affiliates.recurly.order.checkout.error",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.successful.notification.payment",
-            "vhost": "/",
-            "destination": "affiliates.recurly.successful.notification.payment",
-            "destination_type": "queue",
-            "routing_key": "*",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.dlx",
-            "vhost": "/",
-            "destination": "affiliates.recurly.successful.notification.payment.dlx",
-            "destination_type": "queue",
-            "routing_key": "affiliates.recurly.successful.notification.payment.dlx",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.errors",
-            "vhost": "/",
-            "destination": "affiliates.recurly.successful.notification.payment.error",
-            "destination_type": "queue",
-            "routing_key": "affiliates.recurly.successful.notification.payment.error",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.paid.notification.payment",
-            "vhost": "/",
-            "destination": "affiliates.recurly.paid.notification.payment",
-            "destination_type": "queue",
-            "routing_key": "*",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.dlx",
-            "vhost": "/",
-            "destination": "affiliates.recurly.paid.notification.payment.dlx",
-            "destination_type": "queue",
-            "routing_key": "affiliates.recurly.paid.notification.payment.dlx",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.errors",
-            "vhost": "/",
-            "destination": "affiliates.recurly.paid.notification.payment.error",
-            "destination_type": "queue",
-            "routing_key": "affiliates.recurly.paid.notification.payment.error",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.successful.refund.payment",
-            "vhost": "/",
-            "destination": "affiliates.recurly.successful.refund.payment",
-            "destination_type": "queue",
-            "routing_key": "*",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.dlx",
-            "vhost": "/",
-            "destination": "affiliates.recurly.successful.refund.payment.dlx",
-            "destination_type": "queue",
-            "routing_key": "affiliates.recurly.successful.refund.payment.dlx",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.errors",
-            "vhost": "/",
-            "destination": "affiliates.recurly.successful.refund.payment.error",
-            "destination_type": "queue",
-            "routing_key": "affiliates.recurly.successful.refund.payment.error",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.signup.pap",
-            "vhost": "/",
-            "destination": "affiliates.signup.pap",
-            "destination_type": "queue",
-            "routing_key": "*",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.dlx",
-            "vhost": "/",
-            "destination": "affiliates.signup.pap.dlx",
-            "destination_type": "queue",
-            "routing_key": "affiliates.signup.pap.dlx",
-            "arguments": {}
-        },
-        {
-            "source": "affiliates.recurly.errors",
-            "vhost": "/",
-            "destination": "affiliates.signup.pap.error",
-            "destination_type": "queue",
-            "routing_key": "affiliates.signup.pap.error",
             "arguments": {}
         }
     ]
