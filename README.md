@@ -1,7 +1,6 @@
 # Trans IP Coding
 
-The main goal of this project is to genrate and URL hash by CLI. For making commands we are using her the most light framework Symfony 5.4. PHP version 7.3.33 greater. All the environment container based.
-We are using here all the modern approaches for achiving our goal.  
+ A PHP CLI tool that executes hashing on a remote file (http for example) and fetches the result, with error handling and with RabbitMQ retry mechanism. It is completely dockerized and you can easily setup in your local environment. Application based on Symfony 5.4 with 7.3.33 and all the modern practices follow in this project. 
 
 ## clone project
 
