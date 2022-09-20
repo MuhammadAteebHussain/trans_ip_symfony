@@ -40,12 +40,7 @@ composer dumpautload -o
 ```bash
 docker-compose ps -a
 ```
-## Running Project
--  After setting all please up your listeners
-```bash
-php bin/console  app:create-file
-app:create-hash-listen
-```
+
 ##
 -  Now enter in your php container by using the following command
 ```bash
