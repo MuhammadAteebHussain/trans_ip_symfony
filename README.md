@@ -46,6 +46,17 @@ docker-compose ps -a
 php bin/console  app:create-file
 app:create-hash-listen
 ```
+##
+-  Now enter in your php container by using the following command
+```bash
+sudo docker exec -it trans_ip_coding_backend_php  bash
+```
+## Running Project
+-  After setting all please up your listeners inside your container run the following commands
+```bash
+php bin/console  app:create-file
+app:create-hash-listen
+```
 
 ##
 - RUN Unit tests
